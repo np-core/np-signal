@@ -9,7 +9,7 @@ vim: syntax=groovy
 
  Nanopore signal processing pipeline (Fast5)
 
- Documentation: https://github.com/np-core/signal
+ Documentation: https://github.com/np-core/np-signal
 
  Original development by Queensland Genomics, Australian Institute of Tropical Health 
  and Medicince, The Peter Doherty Intitute for Infection and Immunity
@@ -69,7 +69,7 @@ def helpMessage() {
 
     The typical command for running the pipeline is as follows for file-wise signal processing:
 
-        nextflow run np-core/signal --path fast5/ --recursive true
+        nextflow run np-core/np-signal --path fast5/ --recursive true
 
     Input / output:
 
