@@ -52,13 +52,20 @@ If you split a larger `Fast5` collection for example into `fast5/collection1/*.f
 nextflow run np-signal/main.nf --config jcu -profile tesla --path "fast5/collection*" --gpu_forks 2 --gpu_devices "cuda:0 cuda:1"
 ```
 
-### Resource usage
+## Output
+
+By default the pipeline outputs to `$PWD/results`. Files in `results/guppy` are by identification (either file or directory) and summarized (by directory) or single (by file), including:
+
+* `.telemetry` -  telemetry output log from `Guppy`
+* `.summary` - Basecalled read summary file (`sequencing_summary.txt` from Guppy)
+* `.fq` - Basecalled reads from `Guppy`
+
+## Resource usage
 
 Use the following parameters on the command line to specify GPU spread:
 
 * `forks` number of processes that can be run on all available GPUs at the same time - use this to replicate the same process across your available GPUs [1]
 * `gpu_devices` pass one ("cuda:0") or multiple ("cuda:0 cuda:1") GPU devices passed to Guppy - use this to spread the resource demands across your available GPUs ["cuda:0"]
-
 
 Use a combination of both to run the optimal number of parallel signal processes over multiple GPUs.
 
