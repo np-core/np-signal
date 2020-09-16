@@ -64,6 +64,7 @@ Guppy @ GPU configuration:
     --cpu_threads_per_caller    the number of cpu threads per caller
 
 Qcat demultiplexing configuration:
+
     --demultiplex          activate demultiplexing with Qcat
     --qcat_params          additional qcat parameters passed by the user 
 
