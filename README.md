@@ -10,7 +10,7 @@ This prototype can be setup as follows:
 git clone https://github.com/np-core/np-signal
 ```
 
-It requires the container [`Signal`](https://github.com/np-core/containers) to be available in either `Docker` or as `Singularity` image file as specified in the deployment configuration file [`configs/nextflow.config`]
+It requires the container [`Signal`](https://github.com/np-core/containers) to be available in either `Docker` or as `Singularity` image file as specified in the deployment configuration file [`configs/nextflow.config`]. Models by default are found inside the container at `/models` and the default model configuration is `dna_r9.4.1_450bps_hac.cfg`
 
 ## Input
 
