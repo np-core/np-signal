@@ -46,7 +46,7 @@ params.outdir = "$PWD/results" // result output directory, must be full path!
 
 params.guppy_model = "dna_r9.4.1_450bps_hac.cfg"
 params.guppy_params = "-d /models --cpu_threads_per_caller 4"
-params.devices = "cuda:0"
+params.gpu_devices = "cuda:0"
 params.runners_per_device = 4
 params.chunks_per_runner = 1024
 params.chunk_size = 1000
@@ -66,7 +66,7 @@ def helpMessage() {
              N P - S I G N A L  v${version}
     =========================================
 
-    Usage:
+    Usage (offline):
 
     The typical command for running the pipeline is as follows for file-wise signal processing:
 
@@ -97,7 +97,7 @@ def helpMessage() {
 
         --guppy_model          base guppy model configuration file for basecalling [${params.guppy_model}]
         --guppy_params         base guppy additional parameter configurations by user ["${params.guppy_params}"]
-        --devices              gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.devices}"]
+        --gpu_devices              gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.gpu_devices}"]
         --runners_per_device   parameter to control parallel basecalling runners on gpus, fine-tune for memory usage [${params.runners_per_device}]
         --chunks_per_runner    parameter to control the number of signal chunks processed on each runner, fine-tune to control memory usage [${params.chunks_per_runner}]
         --chunk_size           parameter to control the size of the signal chunks processed on the gpu runers, fine-tune to control memory usage [${params.chunk_size}]
