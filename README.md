@@ -2,32 +2,42 @@
 
 Nanopore signal based processing pipelines (Fast5) :peacock:
 
+## Setup
+
+This prototype can be setup as follows:
+
+```
+git clone https://github.com/np-core/np-signal
+```
+
+It requires the container [`Signal`](https://github.com/np-core/containers) to be available in either `Docker` or as `Singularity` image file, as specified in the deployment configuration files (default: `configs/nextflow.config`)
+
 ## Input
 
 Single directory to pass to `Guppy` for basecalling all files (non-recursive) - can be `.tar` or `.tar.gz` if `archived` flag is set:
 
 ```
-nextflow run main.nf --config jcu -profile tesla --path fast5_files/
+nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5_files/
 ```
 
 ```
-nextflow run main.nf --config jcu -profile tesla --path fast5.tar.gz --archived true
+nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5.tar.gz --archived true
 ```
 
 Can make use of multiple `gpu_devices`:
 
 ```
-nextflow run main.nf --config jcu -profile tesla --path fast5_files/ --gpu_devices "cuda:0 cuda:1"
+nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5_files/ --gpu_devices "cuda:0 cuda:1"
 ```
 
 Aggregate of `Fast5` files to pass individually to Guppy callers using a glob in quotes to prevent list expansion (!) - can make use of `forks` (to allow multiple files called in parallel) and `gpu_devices`.
 
 ```
-nextflow run main.nf --config jcu -profile tesla --path "fast5_files/*.fast5"
+nextflow run np-signal/main.nf --config jcu -profile tesla --path "fast5_files/*.fast5"
 ```
 
 ```
-nextflow run main.nf --config jcu -profile tesla --path "fast5_files/*.fast5" --forks 2 --gpu_devices "cuda:0 cuda:1"
+nextflow run np-signal/main.nf --config jcu -profile tesla --path "fast5_files/*.fast5" --forks 2 --gpu_devices "cuda:0 cuda:1"
 ```
 
 ### Resource usage
