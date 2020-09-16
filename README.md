@@ -26,7 +26,7 @@ Usage (offline):
 The typical command for running the pipeline is as follows on a single directory 
 containing the Fast5 files for local GPU signal processing:
 
-    nextflow run np-signal/main.nf --config nextflow -profile gpu_docker --path fast5/ 
+    nextflow run np-core/np-signal --config nextflow -profile gpu_docker --path fast5/ 
 
 Pipeline config:
 
@@ -80,46 +80,48 @@ Qcat demultiplexing configuration:
 
 ## Input
 
+Examples are using a manual configuration and proffile for the JCU GPU server Tesla (`configs/jcu.config`)
+
 Single directory to pass to a single instance of `Guppy` for basecalling files in the directory (recursively):
 
 ```
-nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5_files/
+nextflow run np-core/np-signal --config jcu -profile tesla --path fast5_files/
 ```
 
 Can be `.tar` or `.tar.gz` if `--archived` flag is set:
 
 ```
-nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5.tar.gz --archived true
+nextflow run np-core/np-signal--config jcu -profile tesla --path fast5.tar.gz --archived true
 ```
 
 You can also pass settings to `--guppy_params` for example to basecall the directory recursively:
 
 ```
-nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5_files/ --guppy_params "-r"
+nextflow run np-core/np-signal--config jcu -profile tesla --path fast5_files/ --guppy_params "-r"
 ```
 
 You can make use of multiple `--gpu_devices` for basecalling a single directory with `Guppy`:
 
 ```
-nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5_files/ --gpu_devices "cuda:0 cuda:1"
+nextflow run np-core/np-signal --config jcu -profile tesla --path fast5_files/ --gpu_devices "cuda:0 cuda:1"
 ```
 
 Aggregate of `Fast5` files to pass to individual `Guppy` callers using a glob (in quotes to prevent list expansion):
 
 ```
-nextflow run np-signal/main.nf --config jcu -profile tesla --path "fast5_files/*.fast5"
+nextflow run np-core/np-signal--config jcu -profile tesla --path "fast5_files/*.fast5"
 ```
 
 In this case you can make use of `--gpu_forks` (to allow multiple files called in parallel processes) and `gpu_devices`:
 
 ```
-nextflow run np-signal/main.nf --config jcu -profile tesla --path "fast5_files/*.fast5" --gpu_forks 2 --gpu_devices "cuda:0 cuda:1"
+nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5_files/*.fast5" --gpu_forks 2 --gpu_devices "cuda:0 cuda:1"
 ```
 
 If you split a larger `Fast5` collection into for example `fast5/collection1/*.fast5` and `fast5/collection2/*.fast5` you can use a glob on the directory to utilize multiple instances (`--gpu_forks`) of `Guppy` for each directory calling all files within:
 
 ```
-nextflow run np-signal/main.nf --config jcu -profile tesla --path "fast5/collection*" --gpu_forks 2 --gpu_devices "cuda:0 cuda:1"
+nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5/collection*" --gpu_forks 2 --gpu_devices "cuda:0 cuda:1"
 ```
 
 ## Output
