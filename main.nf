@@ -82,7 +82,7 @@ def helpMessage() {
         the native argument `-profile`
 
         --config                select a configuration from the configs subdirectory of the pipeline [${params.config}]
-        -profile                select an resource and execution profile from the config file [local]
+        -profile                select an resource and execution profile from the config file [$workflow.profile]
 
 
     Input / output:
