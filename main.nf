@@ -138,26 +138,10 @@ def check_file(file) {
 // Input file checks, if none detected exit with error:
 
 
-if (params.recursive){
-    if (params.archived){
-        _fast5 = ["${params.path}/**/*.tar.gz", "${params.path}/**/*.tar"]
-    } else {
-        _fast5 = ["${params.path}/**/*.f5", "${params.path}/**/*.fast5"]
-    }
-
-} else {
-    if (params.archived){
-        _fast5 = ["${params.path}/*.tar.gz", "${params.path}/*.tar"]
-    } else {
-
-        _fast5 = ["${params.path}/*.f5", "${params.path}/*.fast5"]
-    }
-}
-
 // Helper functions
 
-def get_fast5(glob){
-    return channel.fromPath(params.path) | map { tuple( params.archived ? it.simpleName : it.getName(), it ) }
+def get_fast5_dir(glob){
+    return channel.fromPath(glob) | map { tuple( params.archived ? it.simpleName : it.getName(), it ) }
 }
 
 include { Guppy } from './modules/guppy'
@@ -165,7 +149,7 @@ include { Qcat } from './modules/qcat'
 
 workflow basecall_fast5 {
     take:
-        fast5 // id, fast5
+        fast5 // id, fast5_dir
     main:
         guppy_results = Guppy(fast5)
         fastq = guppy_results[0]
@@ -178,5 +162,5 @@ workflow basecall_fast5 {
 }
 
 workflow {
-    get_fast5(_fast5) | basecall_fast5
+    get_fast5_dir(params.path) | basecall_fast5
 }
