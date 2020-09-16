@@ -55,8 +55,9 @@ Guppy @ GPU configuration:
     --guppy_model               base guppy model configuration file for basecalling 
     --guppy_params              base guppy additional parameter configurations by user 
     --guppy_data                base guppy model data directory, inside container
-    --gpu_devices               gpus to use, provide list of devices passed to the -x flag in Guppy 
-    --runners_per_device        parallel basecalling runners on gpus
+    --gpu_devices               gpus to use, provide list of devices passed to Guppy 
+    --gpu_forks                 parallel basecalling instances to launch on GPUs
+    --runners_per_device        parallel basecalling runners on GPUs
     --chunks_per_runner         the number of signal chunks processed on each runner
     --chunk_size                the size of the signal chunks processed on the gpu runers
     --num_callers               the number of basecallers spread across the devices
@@ -121,8 +122,8 @@ By default the pipeline outputs to `$PWD/results`. Files in `results/guppy` are 
 
 Use the following parameters on the command line to specify GPU spread:
 
-* `forks` number of processes that can be run on all available GPUs at the same time - use this to replicate the same process across your available GPUs [1]
-* `gpu_devices` pass one ("cuda:0") or multiple ("cuda:0 cuda:1") GPU devices passed to Guppy - use this to spread the resource demands across your available GPUs ["cuda:0"]
+* `--gpu_forks` number of processes that can be run on all available GPUs at the same time - use this to replicate the same process across your available GPUs
+* `--gpu_devices` pass one ("cuda:0") or multiple ("cuda:0 cuda:1") GPU devices passed to Guppy - use this to spread the resource demands across your available GPUs
 
 Use a combination of both to run the optimal number of parallel signal processes over multiple GPUs.
 
