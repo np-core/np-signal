@@ -162,5 +162,6 @@ workflow basecall_fast5 {
 }
 
 workflow {
+    get_fast5(params.path) | view
     get_fast5(params.path) | basecall_fast5
 }
