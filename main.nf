@@ -97,7 +97,7 @@ def helpMessage() {
 
         --guppy_model          base guppy model configuration file for basecalling [${params.guppy_model}]
         --guppy_params         base guppy additional parameter configurations by user ["${params.guppy_params}"]
-        --gpu_devices          gpu cards to use, provide list of devices passed to the -x flag in Guppy ["${params.gpu_devices}"]
+        --devices              gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.devices}"]
         --runners_per_device   parameter to control parallel basecalling runners on gpus, fine-tune for memory usage [${params.runners_per_device}]
         --chunks_per_runner    parameter to control the number of signal chunks processed on each runner, fine-tune to control memory usage [${params.chunks_per_runner}]
         --chunk_size           parameter to control the size of the signal chunks processed on the gpu runers, fine-tune to control memory usage [${params.chunk_size}]
