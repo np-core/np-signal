@@ -75,9 +75,10 @@ def helpMessage() {
 
         Model configuration files can be found inside the container at: /models
 
-        Resources can be configured hierarchically by first selecting a configuration file (for example
-        for your specific cluster) from the ${baseDir}/configs directory with the argument `--config`.
-        Resource or execution profiles are then selected with the native (-) argument `-profile`.
+        Resources can be configured hierarchically by first selecting a configuration file from
+        ${baseDir}/configs with `--config <name>`
+
+        Resource or execution profiles are selected with the native argument `-profile`
 
         --config                select a configuration from the configs subdirectory of the pipeline [${params.config}]
         -profile                select an resource and execution profile from the config file [local]
