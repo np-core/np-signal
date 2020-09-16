@@ -50,8 +50,9 @@ params.gpu_devices = "cuda:0"
 params.runners_per_device = 4
 params.chunks_per_runner = 1024
 params.chunk_size = 1000
-params.num_caller = 4
+params.num_callers = 4
 
+params.demultiplex = false
 params.qcat_params = "--trim"
 
 // Workflow version
@@ -103,7 +104,7 @@ def helpMessage() {
         --num_callers          parameter to control the number of basecallers spread across the devices, coarse control over memory usage [${params.num_callers}]
 
     Qcat demultiplexing configuration:
-
+        --demultiplex          activate demultiplexing with Qcat [${params.demultiplex}]
         --qcat_params          additional qcat parameters passed by the user ["${params.qcat_params}"]
 
     =========================================
@@ -138,15 +139,25 @@ def check_file(file) {
 
 
 if (params.recursive){
-    _fast5 = ["${params.path}/**/*.f5", "${params.path}/**/*.fast5"]
+    if (params.archived){
+        _fast5 = ["${params.path}/**/*.tar.gz", "${params.path}/**/*.tar"]
+    } else {
+        _fast5 = ["${params.path}/**/*.f5", "${params.path}/**/*.fast5"]
+    }
+
 } else {
-    _fast5 = ["${params.path}/*.f5", "${params.path}/*.fast5"]
+    if (params.archived){
+        _fast5 = ["${params.path}/*.tar.gz", "${params.path}/*.tar"]
+    } else {
+
+        _fast5 = ["${params.path}/*.f5", "${params.path}/*.fast5"]
+    }
 }
 
 // Helper functions
 
 def get_fast5(glob){
-    return channel.fromPath(params.path, type: params.archived ? 'file': 'dir') | map { tuple( params.archived ? it.simpleName : it.getName(), it ) }
+    return channel.fromPath(params.path) | map { tuple( params.archived ? it.simpleName : it.getName(), it ) }
 }
 
 include { Guppy } from './modules/guppy'
