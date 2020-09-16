@@ -49,7 +49,7 @@ params.guppy_params = "-d /models --cpu_threads_per_caller 4"
 params.gpu_devices = "cuda:0"
 params.runners_per_device = 4
 params.chunks_per_runner = 1024
-params.chunk_size = 1000
+params.chunk_size = 1024
 params.num_callers = 4
 
 params.demultiplex = false
@@ -141,7 +141,7 @@ def check_file(file) {
 // Helper functions
 
 def get_fast5_dir(glob){
-    return channel.fromPath(glob) | map { tuple( params.archived ? it.simpleName : it.getName(), it ) }
+    return channel.fromPath(glob) | map { tuple( params.archived ? it.simpleName : it.baseName, it ) }
 }
 
 include { Guppy } from './modules/guppy'
