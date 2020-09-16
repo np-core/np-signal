@@ -140,7 +140,7 @@ def check_file(file) {
 
 // Helper functions
 
-def get_fast5_dir(glob){
+def get_fast5(glob){
     return channel.fromPath(glob) | map { tuple( params.archived ? it.simpleName : it.baseName, it ) }
 }
 
@@ -149,7 +149,7 @@ include { Qcat } from './modules/qcat'
 
 workflow basecall_fast5 {
     take:
-        fast5 // id, fast5_dir
+        fast5 // id, fast5
     main:
         guppy_results = Guppy(fast5)
         fastq = guppy_results[0]
@@ -162,5 +162,5 @@ workflow basecall_fast5 {
 }
 
 workflow {
-    get_fast5_dir(params.path) | basecall_fast5
+    get_fast5(params.path) | basecall_fast5
 }
