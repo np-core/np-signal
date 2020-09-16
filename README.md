@@ -6,8 +6,6 @@ Nanopore signal based processing pipelines (Fast5) :peacock:
 
 ...
 
-
-
 ### Resource usage
 
 Memory consumption is mainly determined by the following parameters for `Guppy`:
