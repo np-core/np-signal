@@ -3,4 +3,4 @@
 	url = https://github.com/np-core/configs
 [submodule "modules"]
 	path = modules
-	url = git@github.com:np-core/modules
+	url = https://github.com/np-core/modules
