@@ -105,7 +105,7 @@ def helpMessage() {
         --chunks_per_runner         parameter to control the number of signal chunks processed on each runner, fine-tune to control memory usage [${params.chunks_per_runner}]
         --chunk_size                parameter to control the size of the signal chunks processed on the gpu runers, fine-tune to control memory usage [${params.chunk_size}]
         --num_callers               parameter to control the number of basecallers spread across the devices, coarse control over memory usage [${params.num_callers}]
-        --cpu_threads_per_caller    parameter to control the number of cpus user per caller [${params.num_callers}]
+        --cpu_threads_per_caller    parameter to control the number of cpu threads per caller [${params.num_callers}]
 
     Qcat demultiplexing configuration:
         --demultiplex          activate demultiplexing with Qcat [${params.demultiplex}]
