@@ -45,11 +45,13 @@ params.archived = false // do the fiels with .tar.gz and require decompression a
 params.outdir = "$PWD/results" // result output directory, must be full path!
 
 params.guppy_model = "dna_r9.4.1_450bps_hac.cfg"
-params.guppy_params = "-d /models --cpu_threads_per_caller 4"
+params.guppy_params = ""
+params.guppy_data = "/models" // inside container
 params.gpu_devices = "cuda:0"
 params.runners_per_device = 4
 params.chunks_per_runner = 1024
 params.chunk_size = 1024
+params.cpu_threads_per_caller = 4
 params.num_callers = 4
 
 params.demultiplex = false
