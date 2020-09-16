@@ -69,7 +69,19 @@ def helpMessage() {
 
     The typical command for running the pipeline is as follows for file-wise signal processing:
 
-        nextflow run np-core/np-signal --path fast5/ --recursive true
+        nextflow run main.nf --config jcu --path fast5/ --recursive true
+
+    Pipeline config:
+
+        Model configuration files can be found inside the container at: /models
+
+        Resources can be configured hierarchically by first selecting a configuration file (for example
+        for your specific cluster) from the ${baseDir}/configs directory with the argument `--config`.
+        Resource or execution profiles are then selected with the native (-) argument `-profile`.
+
+        --config                select a configuration from the configs subdirectory of the pipeline [${params.config}]
+        -profile                select an resource and execution profile from the config file [local]
+
 
     Input / output:
 
@@ -80,7 +92,7 @@ def helpMessage() {
 
     Guppy @ GPU configuration:
 
-        --guppy_model          base guppy model for basecalling [${params.guppy_model}]
+        --guppy_model          base guppy model configuration file for basecalling [${params.guppy_model}]
         --guppy_params         base guppy additional parameter configurations by user ["${params.guppy_params}""]
         --gpu_devices          gpu cards to use, provide list of devices passed to the -x flag in Guppy e.g. cuda:0 cuda:1 ["${params.gpu_devices}""]
         --runners_per_device   parameter to control parallel basecalling runners on gpus, fine-tune for memory usage [${params.runners_per_device}]
