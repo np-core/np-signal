@@ -145,7 +145,7 @@ def check_file(file) {
 // Helper functions
 
 def get_fast5(glob){
-    return channel.fromPath(glob) | map { file -> tuple(file.baseName, file) }
+    return channel.fromPath(glob, type: 'any') | map { file -> tuple(file.baseName, file) }
 }
 
 include { Guppy } from './modules/guppy'
