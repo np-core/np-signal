@@ -4,7 +4,7 @@ Nanopore signal based processing pipelines (Fast5) :peacock:
 
 ## Input
 
-Single directory to pass to `Guppy` for basecalling all files (non-recursive), can be `.tar` or `.tar.gz` if `archived` flag is set:
+Single directory to pass to `Guppy` for basecalling all files (non-recursive) - can be `.tar` or `.tar.gz` if `archived` flag is set:
 
 ```
 nextflow run main.nf --config jcu -profile tesla --path fast5_files/
@@ -20,7 +20,7 @@ Can make use of multiple `gpu_devices`:
 nextflow run main.nf --config jcu -profile tesla --path fast5_files/ --gpu_devices "cuda:0 cuda:1"
 ```
 
-Aggregate of `Fast5` files to pass individually to Guppy callers using a glob in quotes to prevent list expansion (!), can make use of `forks` (to allow multiple files called in parallel) and `gpu_devices`.
+Aggregate of `Fast5` files to pass individually to Guppy callers using a glob in quotes to prevent list expansion (!) - can make use of `forks` (to allow multiple files called in parallel) and `gpu_devices`.
 
 ```
 nextflow run main.nf --config jcu -profile tesla --path "fast5_files/*.fast5"
