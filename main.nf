@@ -40,7 +40,6 @@ nextflow.enable.dsl=2;
 // nextflow config is loaded before compilation
 
 params.path = "$PWD"  // input file directory containing ONT (.fq, .fastq) or Illumina (.fq.gz, .fastq.gz, PE) reads
-params.recursive = false // recursive file search
 params.archived = false // do the fiels with .tar.gz and require decompression and dearchiving?
 params.outdir = "$PWD/results" // result output directory, must be full path!
 
@@ -72,7 +71,7 @@ def helpMessage() {
 
     The typical command for running the pipeline is as follows for file-wise signal processing:
 
-        nextflow run main.nf --config jcu --path fast5/ --recursive true
+        nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5/
 
     Pipeline config:
 
@@ -91,7 +90,6 @@ def helpMessage() {
     Input / output:
 
         --path                  the path to directory of fast5 files to pass to Guppy (single folder) or a glob for Fast5 [${params.path}]
-        --recursive             activate recrusive file search for input directory [${params.recursive}]
         --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [${params.archived}]
         --outdir                the path to directory for result outputs [${params.outdir}]
 
@@ -101,6 +99,7 @@ def helpMessage() {
         --guppy_params              base guppy additional parameter configurations by user ["${params.guppy_params}"]
         --guppy_data                base guppy model data directory, inside container ["${params.guppy_data}"]
         --gpu_devices               gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.gpu_devices}"]
+        --gpu_forks                 parallel basecalling instances to launch on GPUs [${params.gpu_forks}]
         --runners_per_device        parameter to control parallel basecalling runners on gpus, fine-tune for memory usage [${params.runners_per_device}]
         --chunks_per_runner         parameter to control the number of signal chunks processed on each runner, fine-tune to control memory usage [${params.chunks_per_runner}]
         --chunk_size                parameter to control the size of the signal chunks processed on the gpu runers, fine-tune to control memory usage [${params.chunk_size}]
@@ -108,6 +107,7 @@ def helpMessage() {
         --cpu_threads_per_caller    parameter to control the number of cpu threads per caller [${params.num_callers}]
 
     Qcat demultiplexing configuration:
+
         --demultiplex          activate demultiplexing with Qcat [${params.demultiplex}]
         --qcat_params          additional qcat parameters passed by the user ["${params.qcat_params}"]
 
