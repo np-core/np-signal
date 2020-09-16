@@ -97,13 +97,15 @@ def helpMessage() {
 
     Guppy @ GPU configuration:
 
-        --guppy_model          base guppy model configuration file for basecalling [${params.guppy_model}]
-        --guppy_params         base guppy additional parameter configurations by user ["${params.guppy_params}"]
-        --gpu_devices              gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.gpu_devices}"]
-        --runners_per_device   parameter to control parallel basecalling runners on gpus, fine-tune for memory usage [${params.runners_per_device}]
-        --chunks_per_runner    parameter to control the number of signal chunks processed on each runner, fine-tune to control memory usage [${params.chunks_per_runner}]
-        --chunk_size           parameter to control the size of the signal chunks processed on the gpu runers, fine-tune to control memory usage [${params.chunk_size}]
-        --num_callers          parameter to control the number of basecallers spread across the devices, coarse control over memory usage [${params.num_callers}]
+        --guppy_model               base guppy model configuration file for basecalling [${params.guppy_model}]
+        --guppy_params              base guppy additional parameter configurations by user ["${params.guppy_params}"]
+        --guppy_data                base guppy model data directory, inside container ["${params.guppy_data}"]
+        --gpu_devices               gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.gpu_devices}"]
+        --runners_per_device        parameter to control parallel basecalling runners on gpus, fine-tune for memory usage [${params.runners_per_device}]
+        --chunks_per_runner         parameter to control the number of signal chunks processed on each runner, fine-tune to control memory usage [${params.chunks_per_runner}]
+        --chunk_size                parameter to control the size of the signal chunks processed on the gpu runers, fine-tune to control memory usage [${params.chunk_size}]
+        --num_callers               parameter to control the number of basecallers spread across the devices, coarse control over memory usage [${params.num_callers}]
+        --cpu_threads_per_caller    parameter to control the number of cpus user per caller [${params.num_callers}]
 
     Qcat demultiplexing configuration:
         --demultiplex          activate demultiplexing with Qcat [${params.demultiplex}]
