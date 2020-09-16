@@ -40,6 +40,7 @@ Pipeline config:
     the native argument `-profile`
 
     --config                select a configuration from the configs subdirectory of the pipeline
+    --container             path to container file or docker tag to provision pipeline
     -profile                select an resource and execution profile from the config file 
 
 
