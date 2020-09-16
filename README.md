@@ -27,7 +27,7 @@ Usage (offline):
 
 The typical command for running the pipeline is as follows for file-wise signal processing:
 
-    nextflow run main.nf --config jcu --path fast5/ --recursive true
+    nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5/ 
 
 Pipeline config:
 
@@ -46,7 +46,6 @@ Pipeline config:
 Input / output:
 
     --path                  the path to directory or a glob for Fast5 (as string)
-    --recursive             activate recrusive file search for input directory 
     --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz
     --outdir                the path to directory for result outputs
 
