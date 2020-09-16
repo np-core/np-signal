@@ -46,7 +46,7 @@ params.outdir = "$PWD/results" // result output directory, must be full path!
 
 params.guppy_model = "dna_r9.4.1_450bps_hac.cfg"
 params.guppy_params = "-d /models --cpu_threads_per_caller 4"
-params.gpu_devices = "cuda:0"
+params.devices = "cuda:0"
 params.runners_per_device = 4
 params.chunks_per_runner = 1024
 params.chunk_size = 1000
