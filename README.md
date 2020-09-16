@@ -21,7 +21,7 @@ Guppy model configrations can be found inside the container at `/models` and the
 ## Help
 
 ```
-nextflow run np-signal/main.nf --help true
+nextflow run ./np-signal/main.nf --help true
 ```
 
 ```
