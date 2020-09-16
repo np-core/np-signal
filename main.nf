@@ -78,7 +78,8 @@ def helpMessage() {
         Resources can be configured hierarchically by first selecting a configuration file from
         ${baseDir}/configs with `--config <name>`
 
-        Resource or execution profiles are selected with the native argument `-profile`
+        Resource or execution profiles defined within the configuration files are selected with
+        the native argument `-profile`
 
         --config                select a configuration from the configs subdirectory of the pipeline [${params.config}]
         -profile                select an resource and execution profile from the config file [local]
