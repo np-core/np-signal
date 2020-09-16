@@ -53,6 +53,8 @@ params.chunk_size = 1024
 params.cpu_threads_per_caller = 4
 params.num_callers = 4
 
+params.batch_size = 0 // batch the input files or directories to process on a single basecaller process
+
 params.demultiplex = false
 params.qcat_params = "--trim"
 
@@ -64,47 +66,64 @@ def helpMessage() {
 
     log.info"""
     =========================================
-             N P - S I G N A L  v${version}
+     N P - S I G N A L  v${version}
     =========================================
 
     Usage (offline):
 
-    The typical command for running the pipeline is as follows for file-wise signal processing:
+    The typical command for running the pipeline is as follows on a single directory
+    containing the Fast5 files for local GPU signal processing:
 
-        nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5/
+        nextflow run np-core/np-signal --config nextflow -profile gpu_docker --path fast5/
 
-    Pipeline config:
+    Deployment and resource configuration:
 
         Model configuration files can be found inside the container at: /models
 
         Resources can be configured hierarchically by first selecting a configuration file from
-        ${baseDir}/configs with `--config <name>`
+        ${baseDir}/configs with `--config` and a specific resource configuration with `--resource config`
 
-        Resource or execution profiles defined within the configuration files are selected with
+        Specific process execution profiles defined within the configuration files are selected with
         the native argument `-profile`
 
-        --config                select a configuration from the configs subdirectory of the pipeline [${params.config}]
-        -profile                select an resource and execution profile from the config file [$workflow.profile]
+        --container             path to container file or docker tag to provision pipeline
 
+                                  <np-core/signal>    Example for tag of latest Docker image
+                                  <$HOME/signal.sif>  Example for path to singularity image file
 
-    Input / output:
+        --config                select a configuration from the configs subdirectory of the pipeline
+
+                                  <nextflow>  base configuration with docker or singularity profiles
+                                  <jcu>       base configuration for the zodiac cluster at JCU
+                                  <nectar>    base configuration for the nectar cluster at QCIF
+
+        --resource_config       select a resource configuration nested within the selected configuration
+
+                                  <process>   base configuration of processes for compute server resources
+
+        -profile                select a system executor profile from the config file - default:
+
+                                  <docker> / <gpu_docker>  - expect container to be tag format
+                                  <singularity> / <gpu_singularity> - expect container to be path to image
+
+    Input / output configuration:
 
         --path                  the path to directory of fast5 files to pass to Guppy (single folder) or a glob for Fast5 [${params.path}]
         --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [${params.archived}]
         --outdir                the path to directory for result outputs [${params.outdir}]
 
-    Guppy @ GPU configuration:
+    GPU basecalling configuration:
 
         --guppy_model               base guppy model configuration file for basecalling [${params.guppy_model}]
         --guppy_params              base guppy additional parameter configurations by user ["${params.guppy_params}"]
         --guppy_data                base guppy model data directory, inside container ["${params.guppy_data}"]
         --gpu_devices               gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.gpu_devices}"]
         --gpu_forks                 parallel basecalling instances to launch on GPUs [${params.gpu_forks}]
-        --runners_per_device        parameter to control parallel basecalling runners on gpus, fine-tune for memory usage [${params.runners_per_device}]
-        --chunks_per_runner         parameter to control the number of signal chunks processed on each runner, fine-tune to control memory usage [${params.chunks_per_runner}]
-        --chunk_size                parameter to control the size of the signal chunks processed on the gpu runers, fine-tune to control memory usage [${params.chunk_size}]
-        --num_callers               parameter to control the number of basecallers spread across the devices, coarse control over memory usage [${params.num_callers}]
-        --cpu_threads_per_caller    parameter to control the number of cpu threads per caller [${params.num_callers}]
+        --runners_per_device        parallel basecalling runners on gpus [${params.runners_per_device}]
+        --chunks_per_runner         the number of signal chunks processed on each runner [${params.chunks_per_runner}]
+        --chunk_size                the size of the signal chunks processed on the gpu runers[${params.chunk_size}]
+        --num_callers               the number of basecallers spread across the devices [${params.num_callers}]
+        --cpu_threads_per_caller    the number of cpu threads per caller [${params.num_callers}]
 
     Qcat demultiplexing configuration:
 
@@ -144,8 +163,14 @@ def check_file(file) {
 
 // Helper functions
 
-def get_fast5(glob){
-    return channel.fromPath(glob, type: 'any') | map { file -> tuple(file.baseName, file) }
+def get_fast5(glob, batch_size){
+    channel = channel.fromPath(glob, type: 'any')
+    batch = 0
+    if (batch_size > 1) { // outputs batch id, file list, which the basecall process takes into consideration
+        return channel.collate( params.batch_size ).map { batch += 1; files -> tuple("batch-{batch}", files) }
+    } else {
+        return channel | map { path -> tuple(path.baseName, path) }
+    } // outputs id, file or directory path, which the basecall process takes into consideration
 }
 
 include { Guppy } from './modules/guppy'
@@ -166,5 +191,5 @@ workflow basecall_fast5 {
 }
 
 workflow {
-    get_fast5(params.path) | basecall_fast5
+    get_fast5(params.path, params.batch_size) | basecall_fast5
 }
