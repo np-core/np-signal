@@ -88,7 +88,7 @@ def helpMessage() {
 
     Input / output:
 
-        --path                  the path to directory of fast5 files: illumina pe (.fast5, .f5) [${params.path}]
+        --path                  the path to directory of fast5 files to pass to Guppy (single folder) or a glob for Fast5 [${params.path}]
         --recursive             activate recrusive file search for input directory [${params.recursive}]
         --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [${params.archived}]
         --outdir                the path to directory for result outputs [${params.outdir}]
@@ -141,7 +141,7 @@ def check_file(file) {
 // Helper functions
 
 def get_fast5(glob){
-    return channel.fromPath(glob) | map { tuple( params.archived ? it.simpleName : it.baseName, it ) }
+    return channel.fromPath(glob) | map { file -> tuple(file.baseName, file) }
 }
 
 include { Guppy } from './modules/guppy'
