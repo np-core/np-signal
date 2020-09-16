@@ -2,27 +2,19 @@
 
 Nanopore signal based processing pipelines (Fast5) :peacock:
 
-## Setup
-
-This prototype can be setup as follows:
-
 ```
-git clone --recursive https://github.com/np-core/np-signal
+nextflow run np-core/np-signal --help true
 ```
 
 ## Container
 
-[`Signal`](https://github.com/np-core/containers) is available for `Docker` and `Singularity`, for instance configured in the default deployment configuration file `configs/nextflow.config`. A `Docker` container tag or `Singularity` image file path can be specified from the command-line using the `--container` parameter. For example in the `configs/jcu.config` the container parameter for a `Singularity` container is set to: `$HOME/bin/signal.sif`
+[`Signal`](https://github.com/np-core/containers) environments are available for `Docker` and `Singularity` containers, as for instance configured in the default configuration file [`configs/nextflow.config`](https://github.com/np-core/configs/blob/master/nextflow.config). You can specifify a `Docker` container tag or `Singularity` image file path from the command-line using the `--container` parameter, e.g. using the hosted `Docker` container (`np-core/signal`).
 
-## Guppy Models
+## Basecalling
 
-Guppy model configrations can be found inside the container at `/models` and the default model configuration is `dna_r9.4.1_450bps_hac.cfg` with `Guppy v4.0.14` running on an `NVIDIA-Ubuntu16.04 CUDA 9.0 and CUDNN 7.0` instance which should work for `NIVIDIA` GPUs with drivers `> v384.81`.
+`Guppy` model configrations can be found inside the container at `/models` and the default model configuration is `dna_r9.4.1_450bps_hac.cfg` with `Guppy v4.0.14` running on a `NVIDIA-Ubuntu16.04 CUDA 9.0 and CUDNN 7.0` image which should work for `NVIDIA` GPUs using drivers > `v384.81`.
 
-## Help
-
-```
-nextflow run ./np-signal/main.nf --help true
-```
+## Usage
 
 ```
 =========================================
@@ -31,10 +23,10 @@ nextflow run ./np-signal/main.nf --help true
 
 Usage (offline):
 
-The typical command for running the pipeline is as follows for a single directory 
-containing the Fast5 files for signal processing:
+The typical command for running the pipeline is as follows on a single directory 
+containing the Fast5 files for local GPU signal processing:
 
-    nextflow run np-signal/main.nf --config jcu -profile tesla --path fast5/ 
+    nextflow run np-signal/main.nf --config nextflow -profile gpu_docker --path fast5/ 
 
 Pipeline config:
 
@@ -46,34 +38,42 @@ Pipeline config:
     Resource or execution profiles defined within the configuration files are selected with
     the native argument `-profile`
 
-    --config                select a configuration from the configs subdirectory of the pipeline
     --container             path to container file or docker tag to provision pipeline
-    -profile                select an resource and execution profile from the config file 
+    --config                select a configuration from the configs subdirectory of the pipeline
+                              
+                              <nextflow>  base configuration with docker or singularity profiles
+                              <jcu>       base configuration for the zodiac cluster at JCU
+                              <nectar>    base configuration for the nectar cluster at QCIF
+                              
+    -profile                select an resource and executor profile from the config file 
+               
+                              <docker> / <gpu_docker>  - expect container to be tag format
+                              <singularity> / <gpu_singularity> - expect container to be path to image
 
 
 Input / output:
 
-    --path                  the path to directory or a glob for Fast5 (as string)
-    --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz
-    --outdir                the path to directory for result outputs
+    --path                  the path to directory or a glob for Fast5 (quoted string) ["$PWD"]
+    --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [false]
+    --outdir                the path to directory for result outputs ["$PWD/results"]
 
 Guppy @ GPU configuration:
 
-    --guppy_model               base guppy model configuration file for basecalling 
-    --guppy_params              base guppy additional parameter configurations by user 
-    --guppy_data                base guppy model data directory, inside container
-    --gpu_devices               gpus to use, provide list of devices passed to Guppy 
-    --gpu_forks                 parallel basecalling instances to launch on GPUs
-    --runners_per_device        parallel basecalling runners on GPUs
-    --chunks_per_runner         the number of signal chunks processed on each runner
-    --chunk_size                the size of the signal chunks processed on the gpu runers
-    --num_callers               the number of basecallers spread across the devices
-    --cpu_threads_per_caller    the number of cpu threads per caller
+    --guppy_model               base guppy model configuration file for basecalling ["dna_r9.4.1_450bps_hac.cfg"]
+    --guppy_params              base guppy additional parameter configurations by user [""]
+    --guppy_data                base guppy model data directory, inside container ["/models"]
+    --gpu_devices               gpus to use, provide list of devices passed to Guppy  ["cuda:0"]
+    --gpu_forks                 parallel basecalling instances to launch on GPUs [1]
+    --runners_per_device        parallel basecalling runners on GPUs [4]
+    --chunks_per_runner         the number of signal chunks processed on each runner [1024]
+    --chunk_size                the size of the signal chunks processed on the gpu runers [1024]
+    --num_callers               the number of basecallers spread across the devices [4]
+    --cpu_threads_per_caller    the number of cpu threads per caller [4]
 
 Qcat demultiplexing configuration:
 
-    --demultiplex          activate demultiplexing with Qcat
-    --qcat_params          additional qcat parameters passed by the user 
+    --demultiplex          activate demultiplexing with Qcat [false]
+    --qcat_params          additional qcat parameters passed by the user ["--trim"]
 
 =========================================
 ```
