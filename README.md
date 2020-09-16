@@ -15,7 +15,7 @@ It requires the container [`Signal`](https://github.com/np-core/containers) to b
 ## Help
 
 ```
-nextflow run np-signal/main.nf --help true
+nextflow run --recursive np-signal/main.nf --help true
 ```
 
 ```
