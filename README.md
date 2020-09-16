@@ -10,7 +10,7 @@ This prototype can be setup as follows:
 git clone https://github.com/np-core/np-signal
 ```
 
-It requires the container [`Signal`](https://github.com/np-core/containers) to be available in either `Docker` or as `Singularity` image file as specified in the deployment configuration file [`configs/nextflow.config`]. Models by default are found inside the container at `/models` and the default model configuration is `dna_r9.4.1_450bps_hac.cfg`
+It requires the container [`Signal`](https://github.com/np-core/containers) to be available in either `Docker` or as `Singularity` image file, for example as specified in the default deployment configuration file `configs/nextflow.config`. Models by default are found inside the container at `/models` and the default model configuration is `dna_r9.4.1_450bps_hac.cfg` with `Guppy v4.0.14` running on an `NVIDIA-Ubuntu16.04 CUDA 9.0 and CUDNN 7.0` instance which should work for `NIVIDIA` GPUs with drivers `> v384.81`.
 
 ## Help
 
