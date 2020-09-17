@@ -80,7 +80,7 @@ Qcat demultiplexing configuration:
 
 ## Input
 
-Examples are using a manual configuration and proffile for the JCU GPU server Tesla (`configs/jcu.config`)
+Examples are using a manual configuration file and profile for the JCU GPU server Tesla (`configs/jcu.config`)
 
 Single directory to pass to a single instance of `Guppy` for basecalling files in the directory (recursively):
 
