@@ -60,28 +60,26 @@ Qcat configuration:
 
 ## Resourcing
 
+Resources can be configured hierarchically from the `configs/` submodule by selecting a configuration file with `--config` and a process resource configuration file with `--resource_config`. Execution environment profiles defined within the configuration files are selected with the native argument `-profile`
+
 ```
- Resources can be configured hierarchically from ${baseDir}/configs by selecting a configuration 
- file with --config and a process resource configuration file with --resource_config 
 
- Execution environment profiles defined within the configuration files are selected with
- the native argument -profile
 
-    --container             path to container file or docker tag to provision pipeline
-    --config                select a configuration from the configs subdirectory of the pipeline
-                              
-                              <nextflow>  base configuration with docker or singularity profiles
-                              <jcu>       base configuration for the zodiac cluster at JCU
-                              <nectar>    base configuration for the nectar cluster at QCIF
-    
-    --resource_config       select a resource configuration nested within the selected configuration
+--container             path to container file or docker tag to provision pipeline
+--config                select a configuration from the configs subdirectory of the pipeline
 
-                              <process>   base resource configuration of processes for compute servers        
-                             
-    -profile                select an resource and executor profile from the config file 
-               
-                              <docker> / <gpu_docker>  - expect container to be tag format
-                              <singularity> / <gpu_singularity> - expect container to be path to image
+                        <nextflow>  base configuration with docker or singularity profiles
+                        <jcu>       base configuration for the zodiac cluster at JCU
+                        <nectar>    base configuration for the nectar cluster at QCIF
+
+--resource_config       select a resource configuration nested within the selected configuration
+
+                        <process>   base resource configuration of processes for compute servers        
+
+-profile                select an resource and executor profile from the config file 
+
+                        <docker> / <gpu_docker>  - expect container to be tag format
+                        <singularity> / <gpu_singularity> - expect container to be path to image
 
 ```
 
