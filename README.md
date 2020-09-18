@@ -8,7 +8,7 @@ nextflow run np-core/np-signal --help true
 
 ## Container
 
-[`Signal`](https://github.com/np-core/containers) environments are available for `Docker` and `Singularity` containers, as for instance configured in the default configuration file [`configs/nextflow.config`](https://github.com/np-core/configs/blob/master/nextflow.config). You can specifify a `Docker` container tag or `Singularity` [tags or image files] with the `--container` parameter or the native `-with-docker` or `-with-singularity` Nextflow command line flags.
+[`Signal`](https://github.com/np-core/containers) environments are available for `Docker` and `Singularity` containers, as for instance configured in the default configuration file [`configs/nextflow.config`](https://github.com/np-core/configs/blob/master/nextflow.config). You can specifify a `Docker` container tag or `Singularity` [tags or image files](https://www.nextflow.io/docs/latest/singularity.html) with the `--container` parameter or the native `-with-docker` or `-with-singularity` `Nextflow` command line flags.
 
 ## Basecalling
 
@@ -44,7 +44,11 @@ Pipeline config:
                               <nextflow>  base configuration with docker or singularity profiles
                               <jcu>       base configuration for the zodiac cluster at JCU
                               <nectar>    base configuration for the nectar cluster at QCIF
-                              
+    
+   --resource_config       select a resource configuration nested within the selected configuration
+
+                             <process>   base resource configuration of processes for compute servers        
+                             
     -profile                select an resource and executor profile from the config file 
                
                               <docker> / <gpu_docker>  - expect container to be tag format
