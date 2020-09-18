@@ -45,9 +45,9 @@ Pipeline config:
                               <jcu>       base configuration for the zodiac cluster at JCU
                               <nectar>    base configuration for the nectar cluster at QCIF
     
-   --resource_config       select a resource configuration nested within the selected configuration
+    --resource_config       select a resource configuration nested within the selected configuration
 
-                             <process>   base resource configuration of processes for compute servers        
+                              <process>   base resource configuration of processes for compute servers        
                              
     -profile                select an resource and executor profile from the config file 
                
