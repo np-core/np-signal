@@ -104,7 +104,7 @@ nextflow run np-core/np-signal--config jcu -profile tesla --path fast5.tar.gz --
 You can also pass settings to `--guppy_params` for example to basecall the directory recursively:
 
 ```
-nextflow run np-core/np-signal--config jcu -profile tesla --path fast5_files/ --guppy_params "-r"
+nextflow run np-core/np-signal --config jcu -profile tesla --path fast5_files/ --guppy_params "-r"
 ```
 
 You can make use of multiple `--gpu_devices` for basecalling a single directory with `Guppy`:
@@ -116,7 +116,7 @@ nextflow run np-core/np-signal --config jcu -profile tesla --path fast5_files/ -
 Aggregate of `Fast5` files to pass to individual `Guppy` callers using a glob (in quotes to prevent list expansion):
 
 ```
-nextflow run np-core/np-signal--config jcu -profile tesla --path "fast5_files/*.fast5"
+nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5_files/*.fast5"
 ```
 
 In this case you can make use of `--gpu_forks` (to allow multiple files called in parallel processes) and `gpu_devices`:
