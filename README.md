@@ -54,17 +54,14 @@ Qcat configuration:
 
 =========================================
 ```
-## Container
-
-[`Signal`](https://github.com/np-core/containers) environments are available for `Docker` and `Singularity` containers, as for instance configured in the default configuration file [`configs/nextflow.config`](https://github.com/np-core/configs/blob/master/nextflow.config). You can specifify a `Docker` container tag or `Singularity` [tags or image files](https://www.nextflow.io/docs/latest/singularity.html) with the `--container` parameter or the native `-with-docker` or `-with-singularity` `Nextflow` command line flags.
 
 ## Resourcing
+
+[`Signal`](https://github.com/np-core/containers) environments are available for `Docker` and `Singularity` containers, as for instance configured in the default configuration file [`configs/nextflow.config`](https://github.com/np-core/configs/blob/master/nextflow.config). You can specifify a `Docker` container tag or `Singularity` [tags or image files](https://www.nextflow.io/docs/latest/singularity.html) with the `--container` parameter or the native `-with-docker` or `-with-singularity` `Nextflow` command line flags.
 
 Resources can be configured hierarchically from the `configs/` submodule by selecting a configuration file with `--config` and a process resource configuration file with `--resource_config`. Execution environment profiles defined within the configuration files are selected with the native argument `-profile`
 
 ```
-
-
 --container             path to container file or docker tag to provision pipeline
 --config                select a configuration from the configs subdirectory of the pipeline
 
