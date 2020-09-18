@@ -28,15 +28,45 @@ containing the Fast5 files for local GPU signal processing:
 
     nextflow run np-core/np-signal --config nextflow -profile gpu_docker --path fast5/ 
 
-Pipeline config:
+Basecalling configuration:
 
     Model configuration files can be found inside the container at: /models
 
-    Resources can be configured hierarchically by first selecting a configuration file from
-    ${baseDir}/configs with `--config <name>`
+Input / output configuration:
 
-    Resource or execution profiles defined within the configuration files are selected with
-    the native argument `-profile`
+    --path                  the path to directory or a glob for Fast5 (quoted string) ["$PWD"]
+    --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [false]
+    --outdir                the path to directory for result outputs ["$PWD/results"]
+
+Guppy configuration:
+
+    --guppy_model               base guppy model configuration file for basecalling ["dna_r9.4.1_450bps_hac.cfg"]
+    --guppy_params              base guppy additional parameter configurations by user [""]
+    --guppy_data                base guppy model data directory, inside container ["/models"]
+    --gpu_devices               gpus to use, provide list of devices passed to Guppy  ["cuda:0"]
+    --gpu_forks                 parallel basecalling instances to launch on GPUs [1]
+    --runners_per_device        parallel basecalling runners on GPUs [4]
+    --chunks_per_runner         the number of signal chunks processed on each runner [1024]
+    --chunk_size                the size of the signal chunks processed on the gpu runers [1024]
+    --num_callers               the number of basecallers spread across the devices [4]
+    --cpu_threads_per_caller    the number of cpu threads per caller [4]
+
+Qcat configuration:
+
+    --demultiplex          activate demultiplexing with Qcat [false]
+    --qcat_params          additional qcat parameters passed by the user ["--trim"]
+
+=========================================
+```
+
+## Resourcing
+
+```
+ Resources can be configured hierarchically from ${baseDir}/configs by selecting a configuration 
+ file with --config and a process resource configuration file with --resource_config 
+
+ Execution environment profiles defined within the configuration files are selected with
+ the native argument -profile
 
     --container             path to container file or docker tag to provision pipeline
     --config                select a configuration from the configs subdirectory of the pipeline
@@ -54,32 +84,6 @@ Pipeline config:
                               <docker> / <gpu_docker>  - expect container to be tag format
                               <singularity> / <gpu_singularity> - expect container to be path to image
 
-
-Input / output:
-
-    --path                  the path to directory or a glob for Fast5 (quoted string) ["$PWD"]
-    --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [false]
-    --outdir                the path to directory for result outputs ["$PWD/results"]
-
-Guppy @ GPU configuration:
-
-    --guppy_model               base guppy model configuration file for basecalling ["dna_r9.4.1_450bps_hac.cfg"]
-    --guppy_params              base guppy additional parameter configurations by user [""]
-    --guppy_data                base guppy model data directory, inside container ["/models"]
-    --gpu_devices               gpus to use, provide list of devices passed to Guppy  ["cuda:0"]
-    --gpu_forks                 parallel basecalling instances to launch on GPUs [1]
-    --runners_per_device        parallel basecalling runners on GPUs [4]
-    --chunks_per_runner         the number of signal chunks processed on each runner [1024]
-    --chunk_size                the size of the signal chunks processed on the gpu runers [1024]
-    --num_callers               the number of basecallers spread across the devices [4]
-    --cpu_threads_per_caller    the number of cpu threads per caller [4]
-
-Qcat demultiplexing configuration:
-
-    --demultiplex          activate demultiplexing with Qcat [false]
-    --qcat_params          additional qcat parameters passed by the user ["--trim"]
-
-=========================================
 ```
 
 ## Input
