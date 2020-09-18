@@ -6,10 +6,6 @@ Nanopore signal based processing pipelines (Fast5) :peacock:
 nextflow run np-core/np-signal --help true
 ```
 
-## Container
-
-[`Signal`](https://github.com/np-core/containers) environments are available for `Docker` and `Singularity` containers, as for instance configured in the default configuration file [`configs/nextflow.config`](https://github.com/np-core/configs/blob/master/nextflow.config). You can specifify a `Docker` container tag or `Singularity` [tags or image files](https://www.nextflow.io/docs/latest/singularity.html) with the `--container` parameter or the native `-with-docker` or `-with-singularity` `Nextflow` command line flags.
-
 ## Basecalling
 
 `Guppy` model confgurations can be found inside the container at `/models`; the default model configuration is `dna_r9.4.1_450bps_hac.cfg` with `Guppy v4.0.14` running on an `NVIDIA-Ubuntu16.04 CUDA 9.0 and CUDNN 7.0` image, which should work for `NVIDIA` GPUs using drivers > `v384.81`.
@@ -58,6 +54,9 @@ Qcat configuration:
 
 =========================================
 ```
+## Container
+
+[`Signal`](https://github.com/np-core/containers) environments are available for `Docker` and `Singularity` containers, as for instance configured in the default configuration file [`configs/nextflow.config`](https://github.com/np-core/configs/blob/master/nextflow.config). You can specifify a `Docker` container tag or `Singularity` [tags or image files](https://www.nextflow.io/docs/latest/singularity.html) with the `--container` parameter or the native `-with-docker` or `-with-singularity` `Nextflow` command line flags.
 
 ## Resourcing
 
