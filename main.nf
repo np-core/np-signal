@@ -165,7 +165,7 @@ def get_fast5(glob, batch_size){
     channel = channel.fromPath(glob, type: 'any')
     batch = 0
     if (batch_size > 1) { // outputs batch id, file list, which the basecall process takes into consideration
-        return channel.collate( params.batch_size ).map { batch += 1; files -> tuple("batch_{batch}", files) }
+        return channel.collate( params.batch_size ).map { files -> batch += 1; tuple("batch_{batch}", files) }
     } else {
         return channel | map { path -> tuple(path.baseName, path) }
     } // outputs id, file or directory path, which the basecall process takes into consideration
