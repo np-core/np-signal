@@ -163,16 +163,13 @@ def check_file(file) {
 def get_single_fast5(glob){
     return channel.fromPath(glob) | map { file -> tuple(file.baseName, file) }
 }
-
-def get_fast5(glob, batch_size){
-    paths = channel.fromPath(glob, type: 'file')
-    if (batch_size > 1) { // outputs batch id, file list, which the basecall process takes into consideration
-        return paths
-    } else {
-        return paths.map { path -> tuple(path.baseName, path) }
-    } // outputs id, file or directory path, which the basecall process takes into consideration
+def get_fast5(glob){
+    return channel.fromPath(glob, type: 'any') | map { path -> tuple(path.baseName, path) }
 }
 
+def get_fast5_files(glob){
+    return paths = channel.fromPath(glob, type: 'file')
+}
 include { Guppy } from './modules/guppy'
 include { Qcat } from './modules/qcat'
 
@@ -191,13 +188,10 @@ workflow basecall_fast5 {
 }
 
 workflow {
-
-    files = get_single_fast5(params.path) 
-    files | view
     if (params.batch_size > 1){
         batch = 0
-        files | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | view
+        get_fast5_files(params.fast5) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | view
     } else {
-        files | basecall_fast5
+        get_fast5(params.fast5) | basecall_fast5
     }
 }
