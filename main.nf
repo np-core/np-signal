@@ -158,27 +158,35 @@ def check_file(file) {
 
 // Input file checks, if none detected exit with error:
 
-
-// Helper functions
-def get_single_fast5(glob){
-    return channel.fromPath(glob) | map { file -> tuple(file.baseName, file) }
-}
 def get_fast5(glob){
     return channel.fromPath(glob, type: 'any') | map { path -> tuple(path.baseName, path) }
 }
-
 def get_fast5_files(glob){
     return paths = channel.fromPath(glob, type: 'file')
 }
+
 include { Guppy } from './modules/guppy'
+include { GuppyBatch } from './modules/guppy'
 include { Qcat } from './modules/qcat'
 
-workflow basecall_fast5 {
+workflow guppy_basecall_fast5 {
     take:
-        fast5 // id, fast5
+        fast5 // id, fast5 [any]
     main:
-        guppy_results = Guppy(fast5)
-        fastq = guppy_results[0]
+        fastq = Guppy(fast5)[0]
+        if (params.demultiplex){
+            fastq = Qcat(fastq)
+        }
+    emit:
+        fastq
+        guppy_results[1]
+}
+
+workflow guppy_basecall_fast5_batch {
+    take:
+        fast5 // batch id, fast5 [list of files]
+    main:
+        fastq = GuppyBatch(fast5)[0]
         if (params.demultiplex){
             fastq = Qcat(fastq)
         }
@@ -190,8 +198,8 @@ workflow basecall_fast5 {
 workflow {
     if (params.batch_size > 1){
         batch = 0
-        get_fast5_files(params.path) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | basecall_fast5
+        get_fast5_files(params.path) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | guppy_basecall_fast5_batch
     } else {
-        get_fast5(params.path) | basecall_fast5
+        get_fast5(params.path) | guppy_basecall_fast5
     }
 }
