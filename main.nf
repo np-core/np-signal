@@ -173,26 +173,22 @@ workflow guppy_basecall_fast5 {
     take:
         fast5 // id, fast5 [any]
     main:
-        fastq = Guppy(fast5)[0]
-        if (params.demultiplex){
-            fastq = Qcat(fastq)
-        }
+        Guppy(fast5)
+        params.demultiplex ? Qcat(Guppy.out[0]) : null
     emit:
-        fastq
-        guppy_results[1]
+        Guppy.out[0]
+        Guppy.out[1]
 }
 
 workflow guppy_basecall_fast5_batch {
     take:
         fast5 // batch id, fast5 [list of files]
     main:
-        fastq = GuppyBatch(fast5)[0]
-        if (params.demultiplex){
-            fastq = Qcat(fastq)
-        }
+        fastq = GuppyBatch(fast5)
+        params.demultiplex ? Qcat(GuppyBatch.out[0]) : null
     emit:
-        fastq
-        guppy_results[1]
+        GuppyBatch.out[0]
+        GuppyBatch.out[1]
 }
 
 workflow {
