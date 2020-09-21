@@ -162,14 +162,9 @@ def check_file(file) {
 // Helper functions
 
 def get_fast5(glob, batch_size){
-    paths = channel.fromPath(glob, type: 'any')
-    batch = 0
+    path = channel.fromPath(glob, type: 'any')
     if (batch_size > 1) { // outputs batch id, file list, which the basecall process takes into consideration
-        println params.batch_size
-        paths | view
-        batches = paths.collate( params.batch_size ).map { files -> batch += 1; tuple("batch_${batch}", files) }
-        batches | view
-        return batches
+        return path
     } else {
         return paths.map { path -> tuple(path.baseName, path) }
     } // outputs id, file or directory path, which the basecall process takes into consideration
@@ -193,5 +188,10 @@ workflow basecall_fast5 {
 }
 
 workflow {
-    get_fast5(params.path, params.batch_size) | basecall_fast5
+    files = get_fast5(params.path, params.batch_size) 
+    if (params.batch_size > 1){
+        files | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | basecall_fast5
+    } else {
+        files | basecall_fast5
+    }
 }
