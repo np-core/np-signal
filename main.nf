@@ -190,7 +190,7 @@ workflow basecall_fast5 {
 workflow {
     if (params.batch_size > 1){
         batch = 0
-        get_fast5_files(params.path) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | view
+        get_fast5_files(params.path) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | basecall_fast5
     } else {
         get_fast5(params.path) | basecall_fast5
     }
