@@ -166,7 +166,7 @@ def get_fast5(glob, batch_size){
     batch = 0
     if (batch_size > 1) { // outputs batch id, file list, which the basecall process takes into consideration
         batches = paths.collate( params.batch_size ).map { files -> batch += 1; tuple("batch_${batch}", files) }
-        println batches
+        batches | println
         return batches
     } else {
         return paths.map { path -> tuple(path.baseName, path) }
