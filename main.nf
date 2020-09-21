@@ -33,19 +33,17 @@ For interactive dashboard operation and report generation:
 ----------------------------------------------------------------------------------------
 */
 
-import java.nio.file.Paths;
+import java.nio.file.Paths
 
-nextflow.enable.dsl=2;
+nextflow.enable.dsl=2
 
-// nextflow config is loaded before compilation
-
-params.path = "$PWD"  // input file directory containing ONT (.fq, .fastq) or Illumina (.fq.gz, .fastq.gz, PE) reads
-params.archived = false // do the fiels with .tar.gz and require decompression and dearchiving?
-params.outdir = "$PWD/results" // result output directory, must be full path!
+params.path = "$PWD"
+params.archived = false
+params.outdir = "$PWD/results"
 
 params.guppy_model = "dna_r9.4.1_450bps_hac.cfg"
 params.guppy_params = ""
-params.guppy_data = "/models" // inside container
+params.guppy_data = "/guppy_models" 
 params.gpu_devices = "cuda:0"
 params.runners_per_device = 4
 params.chunks_per_runner = 1024
@@ -60,7 +58,7 @@ params.qcat_params = "--trim"
 
 // Workflow version
 
-version = '0.1.1'
+version = '0.1.3'
 
 def helpMessage() {
 
