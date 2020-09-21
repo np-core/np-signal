@@ -160,6 +160,9 @@ def check_file(file) {
 
 
 // Helper functions
+def get_single_fast5(glob){
+    return channel.fromPath(glob) | map { file -> tuple(file.baseName, file) }
+}
 
 def get_fast5(glob, batch_size){
     paths = channel.fromPath(glob, type: 'file')
@@ -189,7 +192,7 @@ workflow basecall_fast5 {
 
 workflow {
 
-    files = get_fast5(params.path, params.batch_size) 
+    files = get_single_fast5(params.path) 
     files | view
     if (params.batch_size > 1){
         batch = 0
