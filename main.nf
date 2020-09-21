@@ -169,33 +169,33 @@ include { Guppy } from './modules/guppy'
 include { GuppyBatch } from './modules/guppy'
 include { Qcat } from './modules/qcat'
 
-workflow guppy_basecall_fast5 {
+workflow guppy_basecall {
     take:
         fast5 // id, fast5 [any]
     main:
-        Guppy(fast5)
-        params.demultiplex ? Qcat(Guppy.out[0]) : null
+        fastq = Guppy(fast5).out[0]
+        params.demultiplex ? Qcat(fastq) : null
     emit:
         Guppy.out[0]
         Guppy.out[1]
 }
 
-workflow guppy_basecall_fast5_batch {
+workflow guppy_basecall_batch {
     take:
-        fast5 // batch id, fast5 [list of files]
+        batch // batch id, fast5 [list of files]
     main:
-        fastq = GuppyBatch(fast5)
-        params.demultiplex ? Qcat(GuppyBatch.out[0]) : null
+        fastq = GuppyBatch(batch).out[0]
+        params.demultiplex ? Qcat(fastq) : null
     emit:
         GuppyBatch.out[0]
         GuppyBatch.out[1]
 }
 
 workflow {
-    if (params.batch_size > 1){
+    if (params.batch_size > 0){
         batch = 0
-        get_fast5_files(params.path) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | guppy_basecall_fast5_batch
+        get_fast5_files(params.path) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | guppy_basecall_batch
     } else {
-        get_fast5(params.path) | guppy_basecall_fast5
+        get_fast5(params.path) | guppy_basecall
     }
 }
