@@ -8,7 +8,8 @@ nextflow run np-core/np-signal --help true
 
 ## Basecalling
 
-`Guppy` model confgurations can be found inside the container at `/models`; the default model configuration is `dna_r9.4.1_450bps_hac.cfg` with `Guppy v4.0.14` running on an `NVIDIA-Ubuntu16.04 CUDA 9.0 and CUDNN 7.0` image, which should work for `NVIDIA` GPUs using drivers > `v384.81`.
+`Guppy` 
+confgurations can be found inside the container at `/guppy_models` or `/rerio_models`; the default model configuration is `dna_r9.4.1_450bps_hac.cfg` with `Guppy v4.0.14` running on an `NVIDIA-Ubuntu16.04 CUDA 9.0 and CUDNN 7.0` image, which should work for `NVIDIA` GPUs using drivers > `v384.81`.
 
 ## Usage
 
@@ -26,7 +27,7 @@ containing the Fast5 files for local GPU signal processing:
 
 Basecalling configuration:
 
-    Model configuration files can be found inside the container at: /models
+    Model configuration files can be found inside the container at: /guppy_models or /rerio_models
 
 Input / output configuration:
 
@@ -38,7 +39,7 @@ Guppy configuration:
 
     --guppy_model               base guppy model configuration file for basecalling ["dna_r9.4.1_450bps_hac.cfg"]
     --guppy_params              base guppy additional parameter configurations by user [""]
-    --guppy_data                base guppy model data directory, inside container ["/models"]
+    --guppy_data                base guppy model data directory, inside container ["/guppy_models"]
     --gpu_devices               gpus to use, provide list of devices passed to Guppy  ["cuda:0"]
     --gpu_forks                 parallel basecalling instances to launch on GPUs [1]
     --runners_per_device        parallel basecalling runners on GPUs [4]
