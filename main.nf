@@ -43,7 +43,7 @@ params.outdir = "$PWD/results"
 
 params.basecaller = "guppy"
 params.bonito_model = "dna_r9.4.1"
-params.bonito_device "cuda"
+params.bonito_device = "cuda"
 params.guppy_model = "dna_r9.4.1_450bps_hac.cfg"
 params.guppy_params = ""
 params.guppy_data = "/guppy_models" 
