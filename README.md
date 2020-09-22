@@ -132,12 +132,12 @@ nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5/collect
 
 ## Output
 
-By default the pipeline outputs to `$PWD/results`. Files in `results/guppy` are prefixed by the input directory or file base name:
+By default the pipeline outputs to `$PWD/results`. Files in `results/guppy` or `results/bonito` are prefixed by the input directory or file base name (`{id}`):
 
 * `{id}/` - symlink to basecalling directory using `Guppy`
 * `{id}.telemetry` -  copy of telemetry output log from `Guppy`
-* `{id}.summary` - copy of basecalled read summary file (`sequencing_summary.txt`)
-* `{id}.fq` - copy of basecalled and concatenated reads from `Guppy`
+* `{id}.summary` - copy of basecalled read summary file from `Guppy` or `Bonito`
+* `{id}.fq` - copy of basecalled reads from `Guppy` or `Bonito`
 
 ## Resource usage
 
