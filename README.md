@@ -88,6 +88,8 @@ Config profiles (default config):
 
 Examples are using a manual configuration file and profile for the JCU GPU server Tesla (`configs/jcu.config`)
 
+### Single Directory
+
 Single directory to pass to a single instance of `Guppy` for basecalling files in the directory (recursively):
 
 ```
@@ -112,22 +114,30 @@ You can make use of multiple `--gpu_devices` for basecalling a single directory 
 nextflow run np-core/np-signal --config jcu -profile tesla --path fast5_files/ --gpu_devices "cuda:0 cuda:1"
 ```
 
+If you split a larger `Fast5` collection into for example `fast5/collection1/*.fast5` and `fast5/collection2/*.fast5` you can use a glob on the directory to utilize multiple instances (`--gpu_forks`) of `Guppy` for each directory calling all files within:
+
+```
+nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5/collection*" --gpu_forks 2 --gpu_devices "cuda:0 cuda:1"
+```
+
+### Multiple Files
+
 Aggregate of `Fast5` files to pass to individual `Guppy` callers using a glob (in quotes to prevent list expansion):
 
 ```
 nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5_files/*.fast5"
 ```
 
+It is recommended to batch `Fast5` files to pass them to a single (paralell) instance of the basecaller for more efficient processing:
+
+```
+nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5_files/*.fast5" --batch_size 30
+```
+
 In this case you can make use of `--gpu_forks` (to allow multiple files called in parallel processes) and `gpu_devices`:
 
 ```
 nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5_files/*.fast5" --gpu_forks 2 --gpu_devices "cuda:0 cuda:1"
-```
-
-If you split a larger `Fast5` collection into for example `fast5/collection1/*.fast5` and `fast5/collection2/*.fast5` you can use a glob on the directory to utilize multiple instances (`--gpu_forks`) of `Guppy` for each directory calling all files within:
-
-```
-nextflow run np-core/np-signal --config jcu -profile tesla --path "fast5/collection*" --gpu_forks 2 --gpu_devices "cuda:0 cuda:1"
 ```
 
 ## Output
