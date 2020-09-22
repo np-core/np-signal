@@ -83,8 +83,6 @@ Config profiles (default config):
 * `docker` / `docker_gpu`
 * `singularity` / `singularity_gpu`
 
-```
-
 ## Input
 
 Examples are using a manual configuration file and profile for the JCU GPU server Tesla (`configs/jcu.config`)
