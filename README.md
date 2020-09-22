@@ -76,8 +76,8 @@ Resources can be configured hierarchically from the `configs/` submodule by sele
 
 -profile                select an resource and executor profile from the config file 
 
-                        <docker> / <gpu_docker>  - expect container to be tag format
-                        <singularity> / <gpu_singularity> - expect container to be path to image
+                        <docker> / <docker_gpu>  - expect container to be tag format
+                        <singularity> / <singularity_gpu> - expect container to be path to image
 
 ```
 
