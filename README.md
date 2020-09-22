@@ -155,4 +155,4 @@ Memory and CPU consumption is mainly determined by the following parameters for 
 * `chunks_per_runner` [1024]
 * `num_callers` [4]
 
-Default parameter configurations uses around 7 GB memory on a single Tesla V100 with 4 CPU threads per Guppy caller.
+Default parameter configurations uses around 7 GB memory on a single Tesla V100 with 4 CPU threads per `Guppy` caller, in the default configuration `Bonito` takes up around 2.5 GB memory on a GTX1080-Ti.
