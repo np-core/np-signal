@@ -116,6 +116,8 @@ You can make use of multiple `--gpu_devices` for basecalling a single directory 
 nextflow run np-core/np-signal --config jcu -profile tesla --path fast5_files/ --gpu_devices "cuda:0 cuda:1"
 ```
 
+### Multiple Directories
+
 If you split a larger `Fast5` collection into for example `fast5/collection1/*.fast5` and `fast5/collection2/*.fast5` you can use a glob on the directory to utilize multiple instances (`--gpu_forks`) of `Guppy` for each directory calling all files within:
 
 ```
