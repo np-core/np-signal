@@ -41,6 +41,9 @@ params.path = "$PWD"
 params.archived = false
 params.outdir = "$PWD/results"
 
+params.basecaller = "guppy"
+params.bonito_model = "dna_r9.4.1"
+params.bonito_device "cuda"
 params.guppy_model = "dna_r9.4.1_450bps_hac.cfg"
 params.guppy_params = ""
 params.guppy_data = "/guppy_models" 
@@ -111,7 +114,9 @@ def helpMessage() {
         --outdir                the path to directory for result outputs [${params.outdir}]
 
     GPU basecalling configuration:
-
+        --basecaller                select a basecalelr, one of: guppy, bonito [${params.basecaller}]
+        --bonito_model              bonito basecalling model, currently only DNA R9.4.1 [${params.bonito_model}]
+        --bonito_device             bonito gpu device to use for basecalling [${params.bonito_device}]
         --guppy_model               base guppy model configuration file for basecalling [${params.guppy_model}]
         --guppy_params              base guppy additional parameter configurations by user ["${params.guppy_params}"]
         --guppy_data                base guppy model data directory, inside container ["${params.guppy_data}"]
@@ -165,37 +170,48 @@ def get_fast5_files(glob){
     return paths = channel.fromPath(glob, type: 'file')
 }
 
+
+include { Bonito } from './modules/bonito'
+include { BonitoBatch } from './modules/bonito'
 include { Guppy } from './modules/guppy'
 include { GuppyBatch } from './modules/guppy'
 include { Qcat } from './modules/qcat'
 
-workflow guppy_basecall {
+workflow basecall {
     take:
         fast5 // id, fast5 [any]
     main:
-        fastq = Guppy(fast5)
-        params.demultiplex ? Qcat(Guppy.out[0]) : null
+        if (params.basecaller == "guppy"){
+            fastq = Guppy(fast5)
+        } else {
+            fastq = Bonito(fast5)
+        }
+        params.demultiplex ? Qcat(fastq[0]) : null
     emit:
-        Guppy.out[0]
-        Guppy.out[1]
+        fastq[0]
+        fastq[1]
 }
 
-workflow guppy_basecall_batch {
+workflow basecall_batch {
     take:
         batch // batch id, fast5 [list of files]
     main:
-        fastq = GuppyBatch(batch)
-        params.demultiplex ? Qcat(GuppyBatch.out[0]) : null
+        if (params.basecaller == "guppy"){
+            fastq = GuppyBatch(batch)
+        } else {
+            fastq = BonitoBatch(fast5)
+        }
+        params.demultiplex ? Qcat(fastq[0]) : null
     emit:
-        GuppyBatch.out[0]
-        GuppyBatch.out[1]
+        fastq[0]
+        fastq[1]
 }
 
 workflow {
     if (params.batch_size > 0){
         batch = 0
-        get_fast5_files(params.path) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | guppy_basecall_batch
+        get_fast5_files(params.path) | collate( params.batch_size ) | map { batch += 1; tuple("batch_${batch}", it) } | basecall_batch
     } else {
-        get_fast5(params.path) | guppy_basecall
+        get_fast5(params.path) | basecall
     }
 }
