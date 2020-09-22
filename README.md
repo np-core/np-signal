@@ -37,6 +37,9 @@ Input / output configuration:
 
 Guppy configuration:
 
+    --basecaller                select a basecaller, one of: guppy, bonito [guppy]
+    --bonito_model              bonito basecalling model, currently only DNA R9.4.1 ["dna_r9.4.1"]
+    --bonito_device             bonito gpu device to use for basecalling [cuda]
     --guppy_model               base guppy model configuration file for basecalling ["dna_r9.4.1_450bps_hac.cfg"]
     --guppy_params              base guppy additional parameter configurations by user [""]
     --guppy_data                base guppy model data directory, inside container ["/guppy_models"]
