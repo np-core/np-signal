@@ -33,6 +33,7 @@ Basecalling configuration:
 Input / output configuration:
 
     --path                  the path to directory or a glob for Fast5 (quoted string) ["$PWD"]
+    --batch_size            batch input files or directories for basecalling on a single instance of the caller [0]
     --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [false]
     --outdir                the path to directory for result outputs ["$PWD/results"]
 
