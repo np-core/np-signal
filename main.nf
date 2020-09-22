@@ -44,6 +44,7 @@ params.outdir = "$PWD/results"
 params.basecaller = "guppy"
 params.bonito_model = "dna_r9.4.1"
 params.bonito_device = "cuda"
+params.bonito_params = ""
 params.guppy_model = "dna_r9.4.1_450bps_hac.cfg"
 params.guppy_params = ""
 params.guppy_data = "/guppy_models" 
@@ -110,17 +111,19 @@ def helpMessage() {
     Input / output configuration:
 
         --path                  the path to directory of fast5 files to pass to Guppy (single folder) or a glob for Fast5 [${params.path}]
+        --batch_size            batch input files or directories for basecalling on a single instance of the caller [${params.batch_size}]
         --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [${params.archived}]
         --outdir                the path to directory for result outputs [${params.outdir}]
-
+        
     GPU basecalling configuration:
 
         --basecaller                select a basecaller, one of: guppy, bonito [${params.basecaller}]
         --bonito_model              bonito basecalling model, currently only DNA R9.4.1 [${params.bonito_model}]
         --bonito_device             bonito gpu device to use for basecalling [${params.bonito_device}]
-        --guppy_model               base guppy model configuration file for basecalling [${params.guppy_model}]
-        --guppy_params              base guppy additional parameter configurations by user ["${params.guppy_params}"]
-        --guppy_data                base guppy model data directory, inside container ["${params.guppy_data}"]
+        --bonito_params             bonito additional basecaller configuration [${params.bonito_params}]
+        --guppy_model               guppy model configuration file for basecalling [${params.guppy_model}]
+        --guppy_params              guppy additional parameter configurations by user ["${params.guppy_params}"]
+        --guppy_data                guppy model data directory, inside container ["${params.guppy_data}"]
         --gpu_devices               gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.gpu_devices}"]
         --gpu_forks                 parallel basecalling instances to launch on GPUs [${params.gpu_forks}]
         --runners_per_device        parallel basecalling runners on gpus [${params.runners_per_device}]
