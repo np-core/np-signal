@@ -8,7 +8,7 @@ nextflow run np-core/np-signal --help true
 
 ## Basecalling
 
-`Guppy` model configuration files can be found inside the container at `/guppy_models` or `/rerio_models`; the directory can be set using the `--guppy_params` argument and the `-d` flag, for example: `--guppy_params "-d /rerio_models"`. Default model configuration is `dna_r9.4.1_450bps_hac.cfg` on `Guppy v4.0.14`.
+`Guppy` model configuration files can be found inside the container at `/guppy_models` or `/rerio_models`; the directory can be set using the `--guppy_params` argument and the `-d` flag, for example: `--guppy_data "/rerio_models"`. Default model configuration is `dna_r9.4.1_450bps_hac.cfg` on `Guppy v4.0.14`.
 
 `Bonito` model configuration is curently locked for the publicly available model `dna_r9.4.1` and will be expanded when the basecaller is developed further. If you would liek to use custom `Bonito` models, please let us know.
 
@@ -42,7 +42,7 @@ Guppy configuration:
     --bonito_model              bonito basecalling model, currently only DNA R9.4.1 ["dna_r9.4.1"]
     --bonito_device             bonito gpu device to use for basecalling [cuda]
     --guppy_model               base guppy model configuration file for basecalling ["dna_r9.4.1_450bps_hac.cfg"]
-    --guppy_params              base guppy additional parameter configurations by user ["-d /guppy_models"]
+    --guppy_params              base guppy additional parameter configurations by user [""]
     --guppy_data                base guppy model data directory, inside container ["/guppy_models"]
     --gpu_devices               gpus to use, provide list of devices passed to Guppy  ["cuda:0"]
     --gpu_forks                 parallel basecalling instances to launch on GPUs [1]
