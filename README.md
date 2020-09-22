@@ -10,7 +10,7 @@ nextflow run np-core/np-signal --help true
 
 `Guppy` model configuration files can be found inside the container at `/guppy_models` or `/rerio_models`; the directory can be set using the `--guppy_params` argument, for example: `--guppy_data "/rerio_models"`. Default model configuration is `dna_r9.4.1_450bps_hac.cfg` on `Guppy v4.0.14`.
 
-`Bonito` model configuration is curently locked for the publicly available model `dna_r9.4.1` and will be expanded when the basecaller is developed further. If you would liek to use custom `Bonito` models, please let us know.
+`Bonito` model configuration is curently locked for the publicly available model `dna_r9.4.1` and will be expanded when the basecaller is developed further. If you would like to use custom `Bonito` models, please let us know.
 
 ## Usage
 
