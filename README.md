@@ -59,28 +59,29 @@ Qcat configuration:
 =========================================
 ```
 
-## Resourcing
+## Configuration
 
-[`Signal`](https://github.com/np-core/containers) environments are available for `Docker` and `Singularity` containers, as for instance configured in the default configuration file [`configs/nextflow.config`](https://github.com/np-core/configs/blob/master/nextflow.config). You can specifify a `Docker` container tag or `Singularity` [tags or image files](https://www.nextflow.io/docs/latest/singularity.html) with the `--container` parameter or the native `-with-docker` or `-with-singularity` `Nextflow` command line flags.
+For resourcing and configuration selection, please see: [`np-core/configs`](https://github.com/np-core/configs)
 
-Resources can be configured hierarchically from the `configs/` submodule by selecting a configuration file with `--config` and a process resource configuration file with `--resource_config`. Execution environment profiles defined within the configuration files are selected with the native argument `-profile`
+Containers:
 
-```
---container             path to container file or docker tag to provision pipeline
---config                select a configuration from the configs subdirectory of the pipeline
+* Docker tag: `np-core/signal:latest`
+* Singularity image: `signal-latest.sif`
 
-                        <nextflow>  base configuration with docker or singularity profiles
-                        <jcu>       base configuration for the zodiac cluster at JCU
-                        <nectar>    base configuration for the nectar cluster at QCIF
+Configs:
 
---resource_config       select a resource configuration nested within the selected configuration
+* Default configuration: `nextflow`
+* James Cook University cluster: `jcu`
+* NECTAR cloud: `nectar`
 
-                        <process>   base resource configuration of processes for compute servers        
+Resource configs (defaultconfig):
 
--profile                select an resource and executor profile from the config file 
+* Local server: `process`
 
-                        <docker> / <docker_gpu>  - expect container to be tag format
-                        <singularity> / <singularity_gpu> - expect container to be path to image
+Config profiles (default config):
+
+* `docker` / `docker_gpu`
+* `singularity` / `singularity_gpu`
 
 ```
 
