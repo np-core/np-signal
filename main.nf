@@ -114,7 +114,8 @@ def helpMessage() {
         --outdir                the path to directory for result outputs [${params.outdir}]
 
     GPU basecalling configuration:
-        --basecaller                select a basecalelr, one of: guppy, bonito [${params.basecaller}]
+
+        --basecaller                select a basecaller, one of: guppy, bonito [${params.basecaller}]
         --bonito_model              bonito basecalling model, currently only DNA R9.4.1 [${params.bonito_model}]
         --bonito_device             bonito gpu device to use for basecalling [${params.bonito_device}]
         --guppy_model               base guppy model configuration file for basecalling [${params.guppy_model}]
