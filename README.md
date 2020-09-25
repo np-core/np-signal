@@ -64,24 +64,25 @@ Qcat configuration:
 
 ## Configuration
 
-For resourcing and configuration selection, please see: [`np-core/configs`](https://github.com/np-core/configs)
+
+For resource configuration selection, please see: [`np-core/configs`](https://github.com/np-core/configs)
 
 Containers:
 
 * Docker tag: `np-core/signal:latest`
 * Singularity image: `signal-latest.sif`
 
-Configs:
+System configs:
 
-* Default configuration: `nextflow`
+* **Default configuration**: `nextflow`
 * James Cook University cluster: `jcu`
 * NECTAR cloud: `nectar`
 
-Resource configs (defaultconfig):
+Resource configs (default config):
 
 * Local server: `process`
 
-Config profiles (default config):
+Profile configs (default config):
 
 * `docker` / `docker_gpu`
 * `singularity` / `singularity_gpu`
