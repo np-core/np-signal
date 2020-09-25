@@ -74,39 +74,19 @@ def helpMessage() {
     Usage (offline):
 
     The typical command for running the pipeline is as follows on a single directory
-    containing the Fast5 files for local GPU signal processing:
+    containing Fast5 files for local GPU basecalling with Docker:
 
         nextflow run np-core/np-signal --config nextflow -profile gpu_docker --path fast5/
 
     Deployment and resource configuration:
 
-        Model configuration files can be found inside the container at: /models
-
         Resources can be configured hierarchically by first selecting a configuration file from
-        ${baseDir}/configs with `--config` and a specific resource configuration with `--resource config`
+        presets with `--config` and resource presets with `--resource_config`
 
         Specific process execution profiles defined within the configuration files are selected with
         the native argument `-profile`
 
-        --container             path to container file or docker tag to provision pipeline
-
-                                  <np-core/signal>    Example for tag of latest Docker image
-                                  <$HOME/signal.sif>  Example for path to singularity image file
-
-        --config                select a configuration from the configs subdirectory of the pipeline
-
-                                  <nextflow>  base configuration with docker or singularity profiles
-                                  <jcu>       base configuration for the zodiac cluster at JCU
-                                  <nectar>    base configuration for the nectar cluster at QCIF
-
-        --resource_config       select a resource configuration nested within the selected configuration
-
-                                  <process>   base configuration of processes for compute server resources
-
-        -profile                select a system executor profile from the config file - default:
-
-                                  <docker> / <gpu_docker>  - expect container to be tag format
-                                  <singularity> / <gpu_singularity> - expect container to be path to image
+        For more information see: https://github.com/np-core/config 
 
     Input / output configuration:
 
@@ -147,22 +127,6 @@ params.help = false
 if (params.help){
     helpMessage()
     exit 0
-}
-
-def check_file(file) {
-    
-    path = Paths.get(file)
-
-    if (path.exists()){
-        log.info"""
-        Detected input file: $file
-        """
-    } else {
-        log.info"""
-        Failed to detect input file: $file
-        """
-        exit 0
-    }
 }
 
 // Input file checks, if none detected exit with error:
