@@ -92,7 +92,6 @@ def helpMessage() {
 
         --path                  the path to directory of fast5 files to pass to Guppy (single folder) or a glob for Fast5 [${params.path}]
         --batch_size            batch input files or directories for basecalling on a single instance of the caller [${params.batch_size}]
-        --archived              input files are expected to be tar gzipped files ending with .tar.gz or .tgz [${params.archived}]
         --outdir                the path to directory for result outputs [${params.outdir}]
         
     GPU basecalling configuration:
@@ -154,7 +153,9 @@ workflow basecall {
         } else {
             fastq = Bonito(fast5)
         }
-        params.demultiplex ? Qcat(fastq[0]) : null
+        if (params.demultiplex){
+            Qcat(fastq[0])
+        }
     emit:
         fastq[0]
         fastq[1]
@@ -169,7 +170,9 @@ workflow basecall_batch {
         } else {
             fastq = BonitoBatch(fast5)
         }
-        params.demultiplex ? Qcat(fastq[0]) : null
+        if (params.demultiplex){
+            Qcat(fastq[0])
+        }
     emit:
         fastq[0]
         fastq[1]
