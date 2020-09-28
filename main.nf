@@ -131,7 +131,7 @@ if (params.help){
 // Input file checks, if none detected exit with error:
 
 def get_fast5(glob){
-    return channel.fromPath(glob, type: 'any') | map { path -> tuple(path.baseName, path) }
+    return channel.fromPath(glob, type: 'any') | map { path -> tuple(path.simpleName, path) }  // simple name for multiple . extensions
 }
 def get_fast5_files(glob){
     return paths = channel.fromPath(glob, type: 'file')
