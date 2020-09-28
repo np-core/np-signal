@@ -48,7 +48,7 @@ params.bonito_params = ""
 params.guppy_model = "dna_r9.4.1_450bps_hac.cfg"
 params.guppy_params = ""
 params.guppy_data = "/guppy_models" 
-params.gpu_devices = "cuda:0"
+params.guppy_devices = "cuda:0"
 params.runners_per_device = 4
 params.chunks_per_runner = 1024
 params.chunk_size = 1024
@@ -103,7 +103,7 @@ def helpMessage() {
         --guppy_model               guppy model configuration file for basecalling [${params.guppy_model}]
         --guppy_params              guppy additional parameter configurations by user ["${params.guppy_params}"]
         --guppy_data                guppy model data directory, inside container ["${params.guppy_data}"]
-        --gpu_devices               gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.gpu_devices}"]
+        --guppy_devices             gpus to use, provide list of devices passed to the -x flag in Guppy ["${params.guppy_devices}"]
         --gpu_forks                 parallel basecalling instances to launch on GPUs [${params.gpu_forks}]
         --runners_per_device        parallel basecalling runners on gpus [${params.runners_per_device}]
         --chunks_per_runner         the number of signal chunks processed on each runner [${params.chunks_per_runner}]
