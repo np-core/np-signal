@@ -107,7 +107,7 @@ def helpMessage() {
         --gpu_forks                 parallel basecalling instances to launch on GPUs [${params.gpu_forks}]
         --runners_per_device        parallel basecalling runners on gpus [${params.runners_per_device}]
         --chunks_per_runner         the number of signal chunks processed on each runner [${params.chunks_per_runner}]
-        --chunk_size                the size of the signal chunks processed on the gpu runers[${params.chunk_size}]
+        --chunk_size                the size of the signal chunks processed on guppy runners [${params.chunk_size}]
         --num_callers               the number of basecallers spread across the devices [${params.num_callers}]
         --cpu_threads_per_caller    the number of cpu threads per caller [${params.num_callers}]
 
